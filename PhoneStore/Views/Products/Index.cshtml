@@ -1,0 +1,130 @@
+﻿@model IEnumerable<PhoneStore.Models.TblProduct>
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using PhoneStore.Models
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+        @{ 
+            var user = Context.Session.GetString("USER");
+            int? role = 0;
+            if(user != null)
+            {
+                var userObj = JsonConvert.DeserializeObject<TblUser>(user);
+                role = userObj.IdRole;
+            }
+        }
+        @{ 
+            if(role == 1)
+            {
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+            }
+        }
+
+<form asp-controller="Products" asp-action="Index">
+    <p>
+        Name: <input type="text" name="SearchString" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Configuration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCtgPhoneNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserCreated)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Configuration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCtgPhoneNavigation.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCreated.Fullname)
+            </td>
+
+            @{
+                if (user != null)
+                {
+                    if (role == 1)
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    }                   
+                }
+                else
+                {
+                    <td>
+                        <a>View Detail</a>
+                    </td>
+                }
+
+
+            }
+        </tr>
+                    }
+    </tbody>
+</table>
