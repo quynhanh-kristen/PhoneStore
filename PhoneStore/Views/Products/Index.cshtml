@@ -6,125 +6,181 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<style>
+    .container {
+        width: 100%;
+        margin-top: 10%;
+        font-family: sans-serif;
+    }
 
-<h1>Index</h1>
-        @{ 
-            var user = Context.Session.GetString("USER");
-            int? role = 0;
-            if(user != null)
-            {
-                var userObj = JsonConvert.DeserializeObject<TblUser>(user);
-                role = userObj.IdRole;
-            }
-        }
-        @{ 
-            if(role == 1)
-            {
-            <p>
-                <a asp-action="Create">Create New</a>
-            </p>
-            }
+        .container h2 {
+            background: #0062cc;
+            color: #fff;
+            width: 200px;
+            font-size: 24px;
+            padding: 5px;
+            height: 40px;
         }
 
-<form asp-controller="Products" asp-action="Index">
-    <p>
-        Name: <input type="text" name="SearchString" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Configuration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCtgPhoneNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserCreated)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    .row {
+        margin-top: 30px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .product-bottom .fa {
+        color: #28a745;
+        font-size: 10px;
+    }
+
+    .product-bottom h3 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .product-bottom h5 {
+        font-size: 15px;
+        padding-bottom: 10px;
+    }
+
+    .overlay {
+        display: block;
+        opacity: 0;
+        position: absolute;
+        top: 10%;
+        margin-left: 0;
+        width: 70px;
+    }
+
+    .product-top:hover .overlay {
+        opacity: 1;
+        margin-left: 5%;
+        transition: 0.6s;
+    }
+
+    .overlay .fa {
+        cursor: pointer;
+        background: #fff;
+        color: #000;
+        height: 35px;
+        width: 35px;
+        font-size: 20px;
+        padding: 7px;
+        margin: 5%;
+        margin-bottom: 5%;
+    }
+
+    .overlay .btn-secondary {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .box {
+        position: absolute;
+        width: 600px;
+        left: 30%;
+        transform: translate(-50%,-50%);
+    }
+
+        .box input {
+            position: relative;
+            display: inline-block;
+            font-size: 20px;
+            box-sizing: border-box;
+            transition: .5s;
+        }
+
+            .box input[type="text"] {
+                background: #fff;
+                width: 340px;
+                height: 50px;
+                padding: 0 25px;
+                border-radius: 25px 0 0 25px;
+            }
+
+            .box input[type="submit"] {
+                position: relative;
+                border-radius: 0 25px 25px 0;
+                width: 150px;
+                height: 50px;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                background: #0062cc;
+                color: #fff;
+                left: -5px;
+            }
+
+                .box input[type="submit"]:hover {
+                    background: #4d4d4d;
+                }
+</style>
+
+@{
+    var user = Context.Session.GetString("USER");
+    int? role = 0;
+    if (user != null)
+    {
+        var userObj = JsonConvert.DeserializeObject<TblUser>(user);
+        role = userObj.IdRole;
+    }
+}
+@{
+    if (role == 1)
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+}
+<div class="row text-center">
+    <div class="box">
+        <form asp-controller="Products" asp-action="Index">
+            <input type="text" name="SearchString" placeholder="Search for Product(s)..." />
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+</div>
+<div class="container">
+    <h2>Products</h2>
+    <div class="row">
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Configuration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCtgPhoneNavigation.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserCreated.Fullname)
-            </td>
 
-            @{
-                if (user != null)
-                {
-                    if (role == 1)
-                    {
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    }                   
-                }
-                else
-                {
-                    <td>
-                        <a>View Detail</a>
-                    </td>
-                }
-
-
-            }
-        </tr>
-                    }
-    </tbody>
-</table>
+            <div class="col-md-3">
+                <div class="product-top">
+                    <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" />
+                    <div class="overlay">
+                        <a asp-action="Details" asp-route-id="@item.Id">
+                            <button type="button" class="btn btn-secondary" title="Detail">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </a>
+                        @{
+                            if (user != null)
+                            {
+                                if (role == 1)
+                                {
+                                    <button type="button" class="btn btn-secondary" title="Edit">
+                                        <i class="fa fa-cog"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" title="Delete">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="product-bottom text-center">
+                    @Html.DisplayFor(modelItem => item.Rating)<i class="fa fa-star"></i>
+                    <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                    <h5>$@Html.DisplayFor(modelItem => item.Cost)</h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>
