@@ -22,5 +22,6 @@ namespace PhoneStore
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        //Ok
     }
 }
