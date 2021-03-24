@@ -7,7 +7,7 @@
 
 <h1>Login</h1>
 
-<form asp-controller="Users" asp-action="CheckLogin" method="post">
+<form asp-controller="Users" asp-action="CheckLogin"  id="LoginForm" method="post">
     <dl class="row">
         <dd class="col-sm-10">
             <input type"text" name="Phone" value="" />
@@ -19,5 +19,11 @@
             <input type="submit" value="Login" />
         </dd>
     </dl>
+    <font color="red">@Html.ViewData["ERROR"]</font>
 
 </form>
+<input id="File1" type="file" />
+
+<script src="~/js/additional-methods.js"></script>
+<script src="~/js/jquery.validate.js"></script>
+<script src="~/js/jquery-2.2.4.min.js"></script>

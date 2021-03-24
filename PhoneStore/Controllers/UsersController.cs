@@ -180,13 +180,13 @@ namespace PhoneStore.Controllers
                         return RedirectToAction("Index", "Products");
                     }
                 }
-                //ViewData["ERROR"] = "Invalid account";
-                return View("Index", "Home");
+                ViewData["ERROR"] = "Invalid account";
+                return View("Login", "Home");
             }
             catch (Exception)
             {
-                //ViewData["ERROR"] = "Invalid account";
-                return View("Index", "Home");
+                ViewData["ERROR"] = "Invalid account";
+                return View("Login", "Home");
             }
         }
 
