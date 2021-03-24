@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json;
-@using PhoneStore.Models 
+@using PhoneStore.Models
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +9,7 @@
     <title>@ViewData["Title"] - PhoneStore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -26,20 +27,24 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Privacy">Privacy</a>
-                        </li>                        
+                        </li>
                         @{
-                                var user = Context.Session.GetString("USER");
-                                if (user != null)
-                                {
-                                    var userObj = JsonConvert.DeserializeObject<TblUser>(user);
-                                    var str = userObj.Fullname;
+                            var user = Context.Session.GetString("USER");
+                            if (user != null)
+                            {
+                                var userObj = JsonConvert.DeserializeObject<TblUser>(user);
+                                var str = userObj.Fullname;
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/">@str</a>
+                                </li>
+
                                 <li class="nav-item" style="text-align: right">
-                                    HELLO, @str <a class="nav-link text-dark" asp-controller="Users" asp-action="Logout">Logout</a>
+                                    <a class="nav-link text-dark" asp-controller="Users" asp-action="Logout">Logout</a>
                                 </li>
                             }
                             else
                             {
-                                <li class="nav-item">
+                                <li class="nav-item float-right">
                                     <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Login</a>
                                 </li>
                             }
