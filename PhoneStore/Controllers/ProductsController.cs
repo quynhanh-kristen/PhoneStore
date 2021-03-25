@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +15,12 @@ namespace PhoneStore.Controllers
     public class ProductsController : Controller
     {
         private readonly PhoneManagementContext _context;
+        private IHostingEnvironment Environment;
 
-        public ProductsController(PhoneManagementContext context)
+        public ProductsController(PhoneManagementContext context, IHostingEnvironment _environment)
         {
             _context = context;
+            Environment = _environment;
         }
 
         // GET: Products
@@ -68,8 +73,36 @@ namespace PhoneStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdCtgPhone,Name,Cost,Quantity,Image,Description,Configuration,Rating,UpdatedDate,UserCreatedId")] TblProduct tblProduct)
+        public async Task<IActionResult> Create([Bind("Id,IdCtgPhone,Name,Cost,Quantity,Image,Description,Configuration,Rating,UpdatedDate,UserCreatedId")] TblProduct tblProduct
+                                                , List<IFormFile> postedFiles)
+            
         {
+            string wwwPath = this.Environment.WebRootPath;
+            string contentPath = this.Environment.ContentRootPath;
+
+            string path = Path.Combine(this.Environment.WebRootPath, "images");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            List<string> uploadedFiles = new List<string>();
+            foreach (IFormFile postedFile in postedFiles)
+            {
+                var date = DateTime.Now.Ticks.ToString() + "_";
+                string fileName = Path.GetFileName(postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, date +fileName), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                    uploadedFiles.Add(fileName);
+                    ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+                }
+                tblProduct.Image = date + postedFile.FileName;
+            }
+            
+
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(tblProduct);
@@ -78,6 +111,7 @@ namespace PhoneStore.Controllers
             }
             ViewData["IdCtgPhone"] = new SelectList(_context.TblCategory, "Id", "Id", tblProduct.IdCtgPhone);
             ViewData["UserCreatedId"] = new SelectList(_context.TblUser, "Id", "Id", tblProduct.UserCreatedId);
+            ViewData["File"] = "";
             return View(tblProduct);
         }
 
@@ -94,8 +128,8 @@ namespace PhoneStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCtgPhone"] = new SelectList(_context.TblCategory, "Id", "Id", tblProduct.IdCtgPhone);
-            ViewData["UserCreatedId"] = new SelectList(_context.TblUser, "Id", "Id", tblProduct.UserCreatedId);
+            ViewData["IdCtgPhone"] = new SelectList(_context.TblCategory,"Id", "Name", tblProduct.IdCtgPhone);
+            ViewData["UserCreatedId"] = new SelectList(_context.TblUser, "Id", "Fullname", tblProduct.UserCreatedId);
             return View(tblProduct);
         }
 
@@ -172,6 +206,21 @@ namespace PhoneStore.Controllers
             return _context.TblProduct.Any(e => e.Id == id);
         }
 
-       
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            var userJsonObj = HttpContext.Session.GetString("USER");
+            if (String.IsNullOrEmpty(userJsonObj))
+            {
+                return RedirectToAction("Index", "Home", new { id = id});
+            }
+            else
+            {
+                return RedirectToAction("Details", "Products", new { id = id });
+            }
+            
+        }
+
+
+
     }
 }

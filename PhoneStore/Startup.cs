@@ -53,6 +53,7 @@ namespace PhoneStore
             app.UseSession();
 
             app.UseAuthorization();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

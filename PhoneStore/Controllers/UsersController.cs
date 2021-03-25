@@ -160,9 +160,8 @@ namespace PhoneStore.Controllers
 
 
 
- 
         [HttpPost]
-        public IActionResult CheckLogin(TblUser user)
+        public IActionResult CheckLogin(TblUser user, string idProduct)
         {
             try
             {
@@ -177,10 +176,20 @@ namespace PhoneStore.Controllers
                     {
                         var userInfor = JsonConvert.SerializeObject(u);
                         HttpContext.Session.SetString("USER", userInfor);
-                        return RedirectToAction("Index", "Products");
+                      
+                        if (!String.IsNullOrEmpty(idProduct))
+                        {
+                            return RedirectToAction("Details", "Products", new { id = idProduct });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Products");
+                        }
+                        
                     }
                 }
                 ViewData["ERROR"] = "Invalid account";
+                
                 return View("Login", "Home");
             }
             catch (Exception)

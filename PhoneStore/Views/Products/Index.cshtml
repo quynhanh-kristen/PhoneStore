@@ -134,6 +134,7 @@
         <p>
             <a asp-action="Create">Create New</a>
         </p>
+        @ViewData["File"]
     }
 }
 <div class="row text-center">
@@ -147,40 +148,52 @@
 <div class="container">
     <h2>Products</h2>
     <div class="row">
-        @foreach (var item in Model)
-        {
+        @{
+            if (Model != null)
+            {
+                foreach (var item in Model)
+                {
 
-            <div class="col-md-3">
-                <div class="product-top">
-                    <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" />
-                    <div class="overlay">
-                        <a asp-action="Details" asp-route-id="@item.Id">
-                            <button type="button" class="btn btn-secondary" title="Detail">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                        </a>
-                        @{
-                            if (user != null)
-                            {
-                                if (role == 1)
-                                {
-                                    <button type="button" class="btn btn-secondary" title="Edit">
-                                        <i class="fa fa-cog"></i>
+                    <div class="col-md-3">
+                        <div class="product-top">
+                            <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" />
+                            <div class="overlay">
+                                <a asp-action="Details" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-secondary" title="Detail">
+                                        <i class="fa fa-eye"></i>
                                     </button>
-                                    <button type="button" class="btn btn-secondary" title="Delete">
-                                        <i class="fa fa-times"></i>
-                                    </button>
+                                </a>
+                                @{
+                                    if (user != null)
+                                    {
+                                        if (role == 1)
+                                        {
+                                            <a  asp-action="Edit" asp-route-id="@item.Id">
+                                                <button type="button" class="btn btn-secondary" title="Edit">
+                                                    <i class="fa fa-cog"></i>
+                                                </button>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id">
+                                                <button type="button" class="btn btn-secondary" title="Delete">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </a>
+                                            
+                                        }
+                                    }
                                 }
-                            }
-                        }
+                            </div>
+                        </div>
+                        <div class="product-bottom text-center">
+                            @Html.DisplayFor(modelItem => item.Rating)<i class="fa fa-star"></i>
+                            <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                            <h5>$@Html.DisplayFor(modelItem => item.Cost)</h5>
+                        </div>
                     </div>
-                </div>
-                <div class="product-bottom text-center">
-                    @Html.DisplayFor(modelItem => item.Rating)<i class="fa fa-star"></i>
-                    <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
-                    <h5>$@Html.DisplayFor(modelItem => item.Cost)</h5>
-                </div>
-            </div>
+                }
+            }
         }
+
+
     </div>
 </div>

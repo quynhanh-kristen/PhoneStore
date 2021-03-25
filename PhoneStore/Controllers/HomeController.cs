@@ -11,9 +11,10 @@ namespace PhoneStore
     public class HomeController : Controller
     {
         // GET: HomeController
-        public  ActionResult Index()
+        public  ActionResult Index(int? id)
         {
-            return View("Login");
+            ViewData["idProduct"] = id;
+            return View("Login", new {id = id });
         }
 
         // GET: HomeController/Details/5
