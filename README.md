@@ -51,12 +51,12 @@
 
 ## Connect to these people:
 - Q.Anh:
-<a href="https://www.facebook.com/honeymoon0609"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook"/></a>
-<a href="https://github.com/quynhanh-kristen"><img src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" alt="github"/></a>
+<a href="https://www.facebook.com/honeymoon0609"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook" width="15" height="15"/></a>
+<a href="https://github.com/quynhanh-kristen"><img src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" alt="github" width="15" height="15"/></a>
 - T.Anh:
-<a href="https://www.facebook.com/tramanh.nguyen.5283"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook"/></a>
+<a href="https://www.facebook.com/tramanh.nguyen.5283"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook" width="15" height="15"/></a>
 - C.Cường:
-<a href="https://www.facebook.com/nguyenchi.cuong.92"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook"/></a>
+<a href="https://www.facebook.com/nguyenchi.cuong.92"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook" width="15" height="15"/></a>
 - T.Long:
-<a href="https://www.facebook.com/long.hanto]"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook"/></a>
-<a href="https://github.com/hantomi"><img src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" alt="github"/></a>
+<a href="https://www.facebook.com/long.hanto"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.13.0/icons/facebook.svg" alt="facebook" width="15" height="15"/></a>
+<a href="https://github.com/hantomi"><img src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" alt="github" width="15" height="15"/></a>
