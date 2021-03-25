@@ -71,11 +71,22 @@
                 <p style="font-size: 18px"> @Html.DisplayFor(model => model.UpdatedDate) </p>
             </div>
             <br /><br /><br />
-            <a asp-action="AddToCart" asp-route-id="@Model.Id" class="add-to-cart-btn mt3">
-                <span>Add to Cart</span>
-                <span>Add to Cart</span>
-            </a>
-
+            @{
+                if (role == 1)
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="add-to-cart-btn mt3">
+                        <span>Edit</span>
+                        <span>Edit</span>
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="AddToCart" asp-route-id="@Model.Id" class="add-to-cart-btn mt3">
+                        <span>Add to Cart</span>
+                        <span>Add to Cart</span>
+                    </a>
+                }
+            }
         </div>
     </div>
 </div>
