@@ -90,14 +90,14 @@ namespace PhoneStore.Controllers
             foreach (IFormFile postedFile in postedFiles)
             {
                 var date = DateTime.Now.Ticks.ToString() + "_";
-                string fileName = Path.GetFileName(postedFile.FileName);
-                using (FileStream stream = new FileStream(Path.Combine(path, date +fileName), FileMode.Create))
+                string fileName = date + "_" + Path.GetFileName(postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path,fileName), FileMode.Create))
                 {
                     postedFile.CopyTo(stream);
                     uploadedFiles.Add(fileName);
                     ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
                 }
-                tblProduct.Image = date + postedFile.FileName;
+                tblProduct.Image = fileName;
             }
             
 
@@ -138,12 +138,15 @@ namespace PhoneStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdCtgPhone,Name,Cost,Quantity,Image,Description,Configuration,Rating,UpdatedDate,UserCreatedId")] TblProduct tblProduct)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdCtgPhone,Name,Cost,Quantity,Image,Description,Configuration,Rating,UpdatedDate,UserCreatedId")] TblProduct tblProduct
+                                              , List<IFormFile> postedFiles)
         {
             if (id != tblProduct.Id)
             {
                 return NotFound();
             }
+
+
 
             if (ModelState.IsValid)
             {

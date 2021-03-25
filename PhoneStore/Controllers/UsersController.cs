@@ -45,7 +45,7 @@ namespace PhoneStore.Controllers
 
             return View(tblUser);
         }
-
+        #region
         // GET: TblUsers/Create
         public IActionResult Create()
         {
@@ -157,7 +157,7 @@ namespace PhoneStore.Controllers
         {
             return _context.TblUser.Any(e => e.Id == id);
         }
-
+        #endregion
 
 
         [HttpPost]
@@ -188,8 +188,7 @@ namespace PhoneStore.Controllers
                         
                     }
                 }
-                ViewData["ERROR"] = "Invalid account";
-                
+                ViewData["ERROR"] = "Invalid account";                
                 return View("Login", "Home");
             }
             catch (Exception)

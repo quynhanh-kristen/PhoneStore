@@ -7,9 +7,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <style>
-    body{
-        background: rgba(0,0,0,.2);
-    }
+   
     .container {
         width: 100%;
         margin-top: 10%;
@@ -120,6 +118,7 @@
                 .box input[type="submit"]:hover {
                     background: #4d4d4d;
                 }
+
     .create-btn {
         box-sizing: border-box;
         display: inline-block;
@@ -128,6 +127,7 @@
         height: 40px;
         box-shadow: 0 5px 25px rgba(0,0,0,0.25);
     }
+
         .create-btn span {
             position: absolute;
             top: 0;
@@ -143,6 +143,7 @@
             letter-spacing: 2px;
             font-size: 14px;
         }
+
             .create-btn span:nth-child(2) {
                 color: #0062cc;
                 background: #000000;
@@ -151,12 +152,15 @@
                 transition: 0.5s;
                 clip-path: polygon(60% 0, 100% 0, 100% 100%, 60% 100%, 40% 53%);
             }
-            .create-btn span:nth-child(2):hover {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 50%);
+
+                .create-btn span:nth-child(2):hover {
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 50%);
+                }
+
+            .create-btn span:nth-child(1):hover ~ span:nth-child(2) {
+                clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%, 100% 50%);
             }
-    .create-btn span:nth-child(1):hover ~ span:nth-child(2) {
-        clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%, 100% 50%);
-    }
+
     .create-btn {
         box-sizing: border-box;
         display: inline-block;
@@ -212,10 +216,10 @@
 @{
     if (role == 1)
     {
-    <a class="create-btn mb-5" asp-action="Create">
-        <span>Create New</span>
-        <span>Create New</span>
-    </a>       
+        <a class="create-btn mb-5" asp-action="Create">
+            <span>Create New</span>
+            <span>Create New</span>
+        </a>
     }
 }
 <div class="row text-center">
@@ -236,35 +240,46 @@
                 {
 
                     <div class="col-md-3">
-                        <div class="product-top">
-                            <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" />
-                            <div class="overlay">
-                                <a asp-action="Details" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-secondary" title="Detail">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                </a>
-                                @{
-                                    if (user != null)
-                                    {
-                                        if (role == 1)
+                                <div class="product-top">
+                                    @{
+                                        var image = item.Image;                                       
+                                        if (image != null)
                                         {
-                                            <a  asp-action="Edit" asp-route-id="@item.Id">
-                                                <button type="button" class="btn btn-secondary" title="Edit">
-                                                    <i class="fa fa-cog"></i>
-                                                </button>
-                                            </a>
-                                            <a asp-action="Delete" asp-route-id="@item.Id">
-                                                <button type="button" class="btn btn-secondary" title="Delete">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </a>
-                                            
+                                            <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/logo.png" />
                                         }
                                     }
-                                }
-                            </div>
-                        </div>
+
+                                    <div class="overlay">
+                                        <a asp-action="Details" asp-route-id="@item.Id">
+                                            <button type="button" class="btn btn-secondary" title="Detail">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </a>
+                                        @{
+                                            if (user != null)
+                                            {
+                                                if (role == 1)
+                                                {
+                                                    <a asp-action="Edit" asp-route-id="@item.Id">
+                                                        <button type="button" class="btn btn-secondary" title="Edit">
+                                                            <i class="fa fa-cog"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a asp-action="Delete" asp-route-id="@item.Id">
+                                                        <button type="button" class="btn btn-secondary" title="Delete">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </a>
+
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
                         <div class="product-bottom text-center">
                             @Html.DisplayFor(modelItem => item.Rating)<i class="fa fa-star"></i>
                             <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
