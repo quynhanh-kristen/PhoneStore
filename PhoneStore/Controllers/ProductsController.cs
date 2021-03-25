@@ -111,7 +111,7 @@ namespace PhoneStore.Controllers
             }
             ViewData["IdCtgPhone"] = new SelectList(_context.TblCategory, "Id", "Id", tblProduct.IdCtgPhone);
             ViewData["UserCreatedId"] = new SelectList(_context.TblUser, "Id", "Id", tblProduct.UserCreatedId);
-            ViewData["File"] = "";
+            
             return View(tblProduct);
         }
 

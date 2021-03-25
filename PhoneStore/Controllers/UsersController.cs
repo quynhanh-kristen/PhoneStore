@@ -168,7 +168,8 @@ namespace PhoneStore.Controllers
                 var users = _context.TblUser;
                 if (user == null)
                 {
-                    return View("Index", "Home");
+                    ViewData["ERROR"] = "User's phone or password was wrong, try again";
+                    return RedirectToAction("Index", "Home", new {id = idProduct});
                 }
                 foreach (TblUser u in users)
                 {
@@ -188,13 +189,13 @@ namespace PhoneStore.Controllers
                         
                     }
                 }
-                ViewData["ERROR"] = "Invalid account";                
-                return View("Login", "Home");
+                TempData["ERROR"] = "Account did not exist !!!";                
+                return RedirectToAction("Index", "Home", new { id = idProduct });
             }
             catch (Exception)
             {
-                ViewData["ERROR"] = "Invalid account";
-                return View("Login", "Home");
+                ViewData["ERROR"] = "Account did not exist !!!";
+                return RedirectToAction("Index", "Home", new { id = idProduct });
             }
         }
 
