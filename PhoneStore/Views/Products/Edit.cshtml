@@ -1,8 +1,21 @@
 ﻿@model PhoneStore.Models.TblProduct
-
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using PhoneStore.Models
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@{
+    var user = Context.Session.GetString("USER");
+    string userName = "";
+    int userId = 0;
+    if (user != null)
+    {
+        var userObj = JsonConvert.DeserializeObject<TblUser>(user);
+        userName = userObj.Fullname;
+        userId = userObj.Id;
+    }
 }
 
 <h1>Edit</h1>
@@ -11,14 +24,14 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="IdCtgPhone" class="control-label"></label>
                 <select asp-for="IdCtgPhone" class="form-control" asp-items="ViewBag.IdCtgPhone"></select>
                 <span asp-validation-for="IdCtgPhone" class="text-danger"></span>
-            </div>            
+            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -61,8 +74,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserCreatedId" class="control-label"></label>
-                <select asp-for="UserCreatedId" class="form-control" asp-items="ViewBag.UserCreatedId"></select>
-                <span asp-validation-for="UserCreatedId" class="text-danger"></span>
+                <input type="hidden" asp-for="UserCreatedId" value="@userId" />
+                <input class="form-control" value="@userName" disabled />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

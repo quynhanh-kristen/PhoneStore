@@ -141,13 +141,35 @@ namespace PhoneStore.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,IdCtgPhone,Name,Cost,Quantity,Image,Description,Configuration,Rating,UpdatedDate,UserCreatedId")] TblProduct tblProduct
                                               , List<IFormFile> postedFiles)
         {
+            //Save file
+            string wwwPath = this.Environment.WebRootPath;
+            string contentPath = this.Environment.ContentRootPath;
+
+            string path = Path.Combine(this.Environment.WebRootPath, "images");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            List<string> uploadedFiles = new List<string>();
+            foreach (IFormFile postedFile in postedFiles)
+            {
+                var date = DateTime.Now.Ticks.ToString() + "_";
+                string fileName = date + "_" + Path.GetFileName(postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                    uploadedFiles.Add(fileName);                    
+                }
+                tblProduct.Image = fileName;
+            }
+            //End save file
+
+
             if (id != tblProduct.Id)
             {
                 return NotFound();
             }
-
-
-
             if (ModelState.IsValid)
             {
                 try

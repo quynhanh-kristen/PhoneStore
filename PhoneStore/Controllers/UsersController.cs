@@ -189,7 +189,7 @@ namespace PhoneStore.Controllers
                         
                     }
                 }
-                TempData["ERROR"] = "Account did not exist !!!";                
+                TempData["ERROR"] = "User's phone or password was wrong, try again";                
                 return RedirectToAction("Index", "Home", new { id = idProduct });
             }
             catch (Exception)

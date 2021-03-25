@@ -1,8 +1,22 @@
 ﻿@model PhoneStore.Models.TblProduct
-
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using PhoneStore.Models
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{
+    var user = Context.Session.GetString("USER");
+    string userName = "";
+    int userId = 0;
+    if (user != null)
+    {
+        var userObj = JsonConvert.DeserializeObject<TblUser>(user);
+        userName = userObj.Fullname;
+        userId = userObj.Id;
+    }
 }
 
 <h1>Create</h1>
@@ -15,7 +29,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdCtgPhone" class="control-label"></label>
-                <select asp-for="IdCtgPhone" class ="form-control" asp-items="ViewBag.IdCtgPhone"></select>
+                <select asp-for="IdCtgPhone" class="form-control" asp-items="ViewBag.IdCtgPhone">@Html.DisplayFor(model => model.Name)</select>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -34,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" type="file" name="postedFiles"/>
+                <input asp-for="Image" class="form-control" type="file" name="postedFiles" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,7 +73,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserCreatedId" class="control-label"></label>
-                <select asp-for="UserCreatedId" class ="form-control" asp-items="ViewBag.UserCreatedId"></select>
+                @*<select asp-for="UserCreatedId" class="form-control" asp-items="ViewBag.UserCreatedId"></select>*@
+                <input type="hidden" asp-for="UserCreatedId" value="@userId" />
+                <input class="form-control" value="@userName" disabled />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

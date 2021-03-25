@@ -15,16 +15,31 @@
         role = userObj.IdRole;
     }
 }
-<br/><br /><br />
+
+<br />
+<br />
+<br />
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100"
-                             src="~/images/@Html.DisplayFor(model => model.Image)"
-                             alt="First slide">
+                    <div class="carousel-item active">                        
+                        @{
+                            var image = Model.Image;
+                            if (image != null)
+                            {
+                                <img class="d-block w-100"
+                                     src="~/images/@Html.DisplayFor(model => model.Image)"
+                                     alt="First slide">
+                            }
+                            else
+                            {                                
+                                <img class="d-block w-100"
+                                     src="~/images/logo.png"
+                                     alt="First slide">
+                            }
+                        }
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
