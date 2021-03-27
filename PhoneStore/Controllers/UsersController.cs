@@ -50,6 +50,7 @@ namespace PhoneStore.Controllers
         public IActionResult Create()
         {
             ViewData["IdRole"] = new SelectList(_context.TblRole, "Id", "Id");
+            ViewData["IdNameRole"] = new SelectList(_context.TblRole, "Id", "Name");
             return View();
         }
 

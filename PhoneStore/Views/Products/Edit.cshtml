@@ -29,7 +29,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="IdCtgPhone" class="control-label"></label>
-                <select asp-for="IdCtgPhone" class="form-control" asp-items="ViewBag.IdCtgPhone"></select>
+                <select asp-for="IdCtgPhone" class="form-control" asp-items="ViewBag.IdCtgPhone">@ViewBag</select>
                 <span asp-validation-for="IdCtgPhone" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input type="file" asp-for="Image" class="form-control" name="postedFiles" />
+                <input type="file" asp-for="Image" class="form-control" name="postedFiles" value=""/>
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">

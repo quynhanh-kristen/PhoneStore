@@ -7,7 +7,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <style>
-   
+
     .container {
         width: 100%;
         margin-top: 10%;
@@ -232,6 +232,11 @@
 </div>
 <div class="container">
     <h2>Products</h2>
+
+    <div class="loading">
+        Loading&#8230;
+    </div>
+
     <div class="row">
         @{
             if (Model != null)
@@ -240,46 +245,46 @@
                 {
 
                     <div class="col-md-3">
-                                <div class="product-top">
-                                    @{
-                                        var image = item.Image;                                       
-                                        if (image != null)
+                        <div class="product-top">
+                            @{
+                                var image = item.Image;
+                                if (image != null)
+                                {
+                                    <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" />
+                                }
+                                else
+                                {
+                                    <img src="~/images/logo.png" />
+                                }
+                            }
+
+                            <div class="overlay">
+                                <a asp-action="Details" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-secondary" title="Detail">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </a>
+                                @{
+                                    if (user != null)
+                                    {
+                                        if (role == 1)
                                         {
-                                            <img src="~/images/@Html.DisplayFor(modelItem => item.Image)" />
-                                        }
-                                        else
-                                        {
-                                            <img src="~/images/logo.png" />
+                                            <a asp-action="Edit" asp-route-id="@item.Id">
+                                                <button type="button" class="btn btn-secondary" title="Edit">
+                                                    <i class="fa fa-cog"></i>
+                                                </button>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id">
+                                                <button type="button" class="btn btn-secondary" title="Delete">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </a>
+
                                         }
                                     }
-
-                                    <div class="overlay">
-                                        <a asp-action="Details" asp-route-id="@item.Id">
-                                            <button type="button" class="btn btn-secondary" title="Detail">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        </a>
-                                        @{
-                                            if (user != null)
-                                            {
-                                                if (role == 1)
-                                                {
-                                                    <a asp-action="Edit" asp-route-id="@item.Id">
-                                                        <button type="button" class="btn btn-secondary" title="Edit">
-                                                            <i class="fa fa-cog"></i>
-                                                        </button>
-                                                    </a>
-                                                    <a asp-action="Delete" asp-route-id="@item.Id">
-                                                        <button type="button" class="btn btn-secondary" title="Delete">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </a>
-
-                                                }
-                                            }
-                                        }
-                                    </div>
-                                </div>
+                                }
+                            </div>
+                        </div>
                         <div class="product-bottom text-center">
                             @Html.DisplayFor(modelItem => item.Rating)<i class="fa fa-star"></i>
                             <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
@@ -288,8 +293,16 @@
                     </div>
                 }
             }
+            else
+            {
+                <div class="col-md-auto">
+                    <p class="text-info">@TempData["EmptyMsg"]</p>
+                    <img src="~/images/logo.png" />
+                </div>
+            }
         }
 
 
     </div>
 </div>
+

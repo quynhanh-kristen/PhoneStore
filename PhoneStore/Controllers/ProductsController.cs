@@ -37,6 +37,12 @@ namespace PhoneStore.Controllers
             if (!String.IsNullOrEmpty(SearchString))
             {
                 products = products.Where(s => s.Name.IndexOf(SearchString) >= 0);
+                if(!products.Any())
+                {
+                    TempData["EmptyMsg"] = "No phone was found";
+                    products = null;
+                    return View("Index");
+                }
             }
 
             return View(await products.ToListAsync());
@@ -232,20 +238,6 @@ namespace PhoneStore.Controllers
         {
             return _context.TblProduct.Any(e => e.Id == id);
         }
-
-        //public async Task<IActionResult> AddToCart(int id)
-        //{
-        //    var userJsonObj = HttpContext.Session.GetString("USER");
-        //    if (String.IsNullOrEmpty(userJsonObj))
-        //    {
-        //        return RedirectToAction("Index", "Home", new { id = id});
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Details", "Products", new { id = id });
-        //    }
-            
-        //}
 
         #region
 

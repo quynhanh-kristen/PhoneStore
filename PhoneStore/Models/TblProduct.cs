@@ -26,7 +26,8 @@ namespace PhoneStore.Models
         [Range(1, 100)]
         public int Quantity { get; set; }
 
-       [RegularExpression(@"[.]png|jpg|jpeg$")]
+       //[RegularExpression(@"\.(jpg|jpeg|png)$",
+       //     ErrorMessage = "The file must end with png, jpg, or jpeg")]
         public string Image { get; set; }
         public string Description { get; set; }
 
