@@ -1,0 +1,106 @@
+﻿@model List<PhoneStore.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+}
+
+
+<h2>Shopping Cart</h2>
+
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @TempData["success"]
+    </div>
+}
+
+
+@if (Model.Count > 0)
+{
+    decimal total = 0;
+    int stt = 1;
+
+
+
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+        @foreach (var cartitem in Model)
+        {
+            var thanhtien = cartitem.quantity * cartitem.product.Cost;
+            total += thanhtien;
+
+            <tr>
+                <td>@(stt++)</td>
+                <td>@cartitem.product.Name</td>
+                <td>@(cartitem.product.Cost.ToString("0"))</td>
+                <td><input asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.Id}")" /></td>
+                <td>@(thanhtien.ToString("0"))</td>
+                <td>
+                    <button class="btn btn-success updatecartitem"
+                            data-productid="@cartitem.product.Id">
+                        Update
+                    </button>
+                    <a asp-route="removecart" asp-route-productid="@cartitem.product.Id"
+                       class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4" class="text-right">Total</td>
+            <td>@(total.ToString("0"))</td>
+            <td></td>
+        </tr>
+    </table>
+
+
+
+    <a asp-controller="Products" asp-action="Checkout" class="btn btn-success">Order</a>
+
+    @section Scripts {
+        <script>
+          $(document).ready(function () {
+              $(".updatecartitem").click(function (event) {
+                  event.preventDefault();
+                  var Id = $(this).attr("data-productid");
+                  var quantity = $("#quantity-" + Id).val();
+
+                  var fd = new FormData();
+                  fd.append('Id', Id);
+                  fd.append('quantity', quantity);
+
+                  $.ajax({
+                      type: "POST",
+                      url: "@Url.RouteUrl("updatecart")",
+                      processData: false,
+                      contentType: false,
+                      dataType: 'json',
+                      data: fd,
+                      success: function (result) {
+                          console.log("SUCCESS!");
+                          window.location.reload();
+                      }
+                  });
+              });
+          });
+        </script>
+    }
+
+}
+else
+{
+    <p class="alert alert-danger">Empty Cart</p>
+}
+
+
+
+
+

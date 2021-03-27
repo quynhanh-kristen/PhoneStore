@@ -26,7 +26,7 @@ namespace PhoneStore.Models
         [Range(1, 100)]
         public int Quantity { get; set; }
 
-       
+       [RegularExpression(@"[.]png|jpg|jpeg$")]
         public string Image { get; set; }
         public string Description { get; set; }
 

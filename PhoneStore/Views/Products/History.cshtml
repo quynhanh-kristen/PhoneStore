@@ -1,0 +1,56 @@
+﻿@using PhoneStore.Models
+
+<title>@ViewData["idUser"] - PhoneStore</title>
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>History</h1>
+
+
+@{int count = 0; }
+
+<div id="accordion">
+    @foreach (TblOrder order in ViewBag.orders)
+    {
+        <div class="card">
+            <div class="card-header" id="heading@(order.Id)">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse@(order.Id)" aria-expanded="true" aria-controls="collapse@(order.Id)">
+                        Order on @order.CreatedDate
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapse@(order.Id)" class="collapse show" aria-labelledby="heading@(order.Id)" data-parent="#accordion">
+                <div class="card-body">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TblOrderDetail detail in order.TblOrderDetail)
+                            {
+                                <tr>
+                                    <td>@(++count)</td>
+                                    <td><img src="../images/@detail.IdProductNavigation.Image" width="70px" height="90px"></td>
+                                    <td>@detail.IdProductNavigation.Name</td>
+                                    <td>@detail.IdProductNavigation.Quantity</td>
+                                    <td>@(detail.IdProductNavigation.Cost * detail.BoughtQuantity)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
