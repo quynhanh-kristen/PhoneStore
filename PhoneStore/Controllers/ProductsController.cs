@@ -305,7 +305,9 @@ namespace PhoneStore.Controllers
 
             // Lưu cart vào Session
             SaveCartSession(cart);
-            TempData["ADDMSG"] = "Product was added to cart";
+            //ViewBag.ErrorMess = "This product was added to cart";
+            TempData["ErrorMess"] = "This product was added to cart";
+            TempData.Keep("ErrorMess");
             // Chuyển đến trang hiện thị Cart                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      0
             //return RedirectToAction(nameof(Cart));
             return RedirectToAction("Details", "Products", new { id = Id });
@@ -336,7 +338,7 @@ namespace PhoneStore.Controllers
                 orderDetail.IdOrder = newOrder.Id;
                 orderDetail.IdProduct = product.product.Id;
                 orderDetail.BoughtQuantity = product.quantity;
-                orderDetail.Tax = 10; //mai mot tu chinh
+                orderDetail.Tax = 10; //default
                 _context.TblOrderDetail.Add(orderDetail);
             }
 

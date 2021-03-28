@@ -100,7 +100,9 @@
                         <span>Add to Cart</span>
                         <span>Add to Cart</span>
                     </a>
-                    <div class="text-info"><b>@ViewBag.ADDMSG</b></div>
+                   
+                    var msg = TempData["ErrorMess"];                   
+                    <div class="text-info"><b>@msg</b></div>
                 }
             }
         </div>
