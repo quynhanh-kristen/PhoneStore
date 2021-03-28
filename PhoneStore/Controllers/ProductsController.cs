@@ -345,9 +345,16 @@ namespace PhoneStore.Controllers
 
                 //Update quantity
                 var boughtItem = _context.TblProduct.Where(item => item.Id == product.product.Id).FirstOrDefault();
-                if(boughtItem.Quantity < product.quantity)
+                if(boughtItem.Quantity < product.quantity || product.quantity < 0)
                 {
-                    TempData["ErrorQtt"] = "Not enough quantity for " + boughtItem.Name;
+                    if(product.quantity < 0)
+                    {
+                        TempData["ErrorQtt"] = "Quantity > 0 ";
+                    }
+                    else
+                    {
+                        TempData["ErrorQtt"] = "Not enough quantity for " + boughtItem.Name;
+                    }                    
                     return RedirectToAction("Cart", "Products");
                 }
                 boughtItem.Quantity = Convert.ToInt32(boughtItem.Quantity - product.quantity);
@@ -397,10 +404,18 @@ namespace PhoneStore.Controllers
         {
             var product = _context.TblProduct.Where(p => p.Id == Id).SingleOrDefault();
             int lastQuantity = product.Quantity; 
-            if(lastQuantity < quantity)
+            if(lastQuantity < quantity || quantity < 0)
             {
-                TempData["ErrorQtt"] = "Not enough quantity for " + product.Name;               
+                if(quantity < 0)
+                {
+                    TempData["ErrorQtt"] = "Quantity must > 0 ";
+                }
+                else
+                {
+                    TempData["ErrorQtt"] = "Not enough quantity for " + product.Name;
+                }
             }
+                
             else
             {
                 // Cập nhật Cart thay đổi số lượng quantity ...
