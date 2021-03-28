@@ -284,7 +284,7 @@ namespace PhoneStore.Controllers
                 return RedirectToAction("Index", "Home", new { id = Id });
             }
             var product = _context.TblProduct
-                .Where(p => p.Id == Id)
+                .Where(p => p.Id == Id && p.Quantity > 0)
                 .FirstOrDefault();
             if (product == null)
                 return NotFound("No product in the stock");
@@ -305,8 +305,11 @@ namespace PhoneStore.Controllers
 
             // Lưu cart vào Session
             SaveCartSession(cart);
+            TempData["ADDMSG"] = "Product was added to cart";
             // Chuyển đến trang hiện thị Cart
-            return RedirectToAction(nameof(Cart));
+            //return RedirectToAction(nameof(Cart));
+            return RedirectToAction("Details", "Products", new { id = Id });
+            //return View("Details",  new { id = Id });
         }
 
         [HttpGet]

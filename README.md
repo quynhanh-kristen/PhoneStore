@@ -1,4 +1,4 @@
-# Phome Management Project
+# Phone Management Project
 
 ## Featuring:
 
@@ -31,13 +31,12 @@
 - Creating Shopping Cart
 - Shopping Cart basic functional requierment
 - Setup basic shopping cart UI
+- Project Powerpoint
 
 ### C.Cường:
 - Provide project's idea
-- Database creation
 - Creating Shopping Cart
 - Shopping Cart's Order Pharse and history
-- Project Powerpoint
 
 ### T.Long:
 - Provide project's idea
