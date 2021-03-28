@@ -375,7 +375,7 @@ namespace PhoneStore.Controllers
 
         public ActionResult ViewHistory(int? id)
         {
-            //id cua thang do
+            //id cua user
             var rawUserSession = HttpContext.Session.GetString("USER");
             var user = JsonConvert.DeserializeObject<TblUser>(rawUserSession);
 
@@ -387,6 +387,16 @@ namespace PhoneStore.Controllers
             ViewBag.idUser = id;
             ViewBag.orders = orders;
             return View("History", new { id = id });
+        }
+
+        public ActionResult UpdateStatusOfOrder(int id)
+        {
+            var order = _context.TblOrder.Where(o => o.Id == id).SingleOrDefault();
+            order.Status = "Canceled";
+            _context.TblOrder.Update(order);
+            _context.SaveChanges();
+            TempData["CanceledError"] = "One order is canceled";
+            return RedirectToAction("ViewHistory", "Products");
         }
 
         // Hiện thị giỏ hàng

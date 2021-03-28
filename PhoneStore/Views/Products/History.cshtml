@@ -7,7 +7,10 @@
 }
 
 <h1>History</h1>
-
+@{ 
+    var canceledMsg = TempData["CanceledError"];
+}
+<font color="red">@canceledMsg</font>
 
 <div id="accordion">
     @foreach (TblOrder order in ViewBag.orders)
@@ -52,7 +55,7 @@
             </div>
             <div class="card-footer">
                 <div class="col-md-1 float-right">
-                    <a asp-controller="Products" asp-action="ChangeStatus" asp-route-id="@(order.Id)"
+                    <a href="UpdateStatusOfOrder?id=@(order.Id)"
                        class="btn btn-danger">Cancel</a>
                 </div>
             </div>
@@ -109,4 +112,5 @@
         padding: 1rem 2rem;
     }
 </style>
+
 

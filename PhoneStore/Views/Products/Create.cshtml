@@ -71,8 +71,7 @@
                 <span asp-validation-for="UpdatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserCreatedId" class="control-label"></label>
-                @*<select asp-for="UserCreatedId" class="form-control" asp-items="ViewBag.UserCreatedId"></select>*@
+                <label asp-for="UserCreatedId" class="control-label"></label>              
                 <input type="hidden" asp-for="UserCreatedId" value="@userId" />
                 <input class="form-control" value="@userName" disabled />
             </div>

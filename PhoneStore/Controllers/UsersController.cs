@@ -65,7 +65,7 @@ namespace PhoneStore.Controllers
             {
                 _context.Add(tblUser);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             ViewData["IdRole"] = new SelectList(_context.TblRole, "Id", "Id", tblUser.IdRole);
             return View(tblUser);
