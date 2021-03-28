@@ -71,7 +71,11 @@ namespace PhoneStore.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["IdCtgPhone"] = new SelectList(_context.TblCategory, "Id", "Id");
+            var tblProduct = _context.TblProduct
+                .Include(t => t.IdCtgPhoneNavigation);
+
+
+            ViewData["IdCtgPhone"] = new SelectList(_context.TblCategory, "Id", "Name", tblProduct.ThenInclude(t => t.Name));
             ViewData["UserCreatedId"] = new SelectList(_context.TblUser, "Id", "Id");
             return View();
         }
