@@ -16,7 +16,7 @@ namespace PhoneStore.Validation
 
     }
 
-    public class EmailUserUniqueAttribute : ValidationAttribute
+    public class PhoneUserUniqueAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(
             object value, ValidationContext validationContext)
@@ -33,7 +33,11 @@ namespace PhoneStore.Validation
 
         public string GetErrorMessage(string phone)
         {
-            return $"Email {phone} is already in use.";
+            return $"Phone {phone} is already in use.";
         }
     }
+
+    
+
+
 }

@@ -1,4 +1,5 @@
 ﻿@model List<PhoneStore.Models.CartItem>
+@using PhoneStore.Validation 
 
 @{
     ViewData["Title"] = "Add";
@@ -42,7 +43,9 @@
                 <td>@(stt++)</td>
                 <td>@cartitem.product.Name</td>
                 <td>@(cartitem.product.Cost.ToString("0"))</td>
-                <td><input asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.Id}")" /></td>
+                <td>
+                    <input asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.Id}")" />
+                </td>              
                 <td>@(thanhtien.ToString("0")) $</td>
                 <td>
                     <button class="btn btn-success updatecartitem"
@@ -62,7 +65,12 @@
     </table>
 
     <a asp-controller="Products" asp-action="Checkout" class="btn btn-submit">Order</a>
-
+    <font color="red">
+        @{ 
+            var msgQtt = TempData["ErrorQtt"];            
+        }
+        @msgQtt
+    </font>
     <style>
         table {
             border-collapse: collapse;
@@ -122,6 +130,7 @@
                           console.log("SUCCESS!");
                           window.location.reload();
                       }
+                     
                   });
               });
           });

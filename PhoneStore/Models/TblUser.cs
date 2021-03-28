@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhoneStore.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,7 +24,7 @@ namespace PhoneStore.Models
 
         [Required(ErrorMessage = "You must provide a phone number")]
         [RegularExpression(@"((01|09|03|07|08|05)+([0-9]{8})\b)", ErrorMessage = "Not a valid phone number")]
-        
+        [PhoneUserUnique(ErrorMessage ="Phone has already had")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Please fill your address")]

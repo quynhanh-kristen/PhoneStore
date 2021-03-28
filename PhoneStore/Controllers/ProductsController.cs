@@ -317,6 +317,10 @@ namespace PhoneStore.Controllers
         [HttpGet]
         public IActionResult Checkout()
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Cart");
+            }
             var rawUser = HttpContext.Session.GetString("USER");
             var user = JsonConvert.DeserializeObject<TblUser>(rawUser);
             var products = GetCartItems(); //get products in cart session
@@ -338,6 +342,17 @@ namespace PhoneStore.Controllers
                 orderDetail.IdOrder = newOrder.Id;
                 orderDetail.IdProduct = product.product.Id;
                 orderDetail.BoughtQuantity = product.quantity;
+
+                //Update quantity
+                var boughtItem = _context.TblProduct.Where(item => item.Id == product.product.Id).FirstOrDefault();
+                if(boughtItem.Quantity < product.quantity)
+                {
+                    TempData["ErrorQtt"] = "Not enough quantity for " + boughtItem.Name;
+                    return RedirectToAction("Cart", "Products");
+                }
+                boughtItem.Quantity = Convert.ToInt32(boughtItem.Quantity - product.quantity);
+                 _context.TblProduct.Update(boughtItem);
+
                 orderDetail.Tax = 10; //default
                 _context.TblOrderDetail.Add(orderDetail);
             }
@@ -380,16 +395,30 @@ namespace PhoneStore.Controllers
         [Route("/updatecart", Name = "updatecart")]
         public IActionResult UpdateCart(int Id, int quantity)
         {
-            // Cập nhật Cart thay đổi số lượng quantity ...
-            var cart = GetCartItems();
-            var cartitem = cart.Find(p => p.product.Id == Id);
-            if (cartitem != null)
+            var product = _context.TblProduct.Where(p => p.Id == Id).SingleOrDefault();
+            int lastQuantity = product.Quantity; 
+            if(lastQuantity < quantity)
             {
-                // Đã tồn tại, tăng thêm 1
-                cartitem.quantity = quantity;
-
+                TempData["ErrorQtt"] = "Not enough quantity for " + product.Name;               
             }
-            SaveCartSession(cart);
+            else
+            {
+                // Cập nhật Cart thay đổi số lượng quantity ...
+                var cart = GetCartItems();
+                var cartitem = cart.Find(p => p.product.Id == Id);
+                if (cartitem != null)
+                {
+                    // Đã tồn tại, tăng thêm 1
+                    cartitem.quantity = quantity;
+
+                }
+                SaveCartSession(cart);
+            }
+            //if (!ModelState.IsValid)
+            //{                
+                
+            //}
+            
             // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
             return Ok(new { Id = Id });
         }
