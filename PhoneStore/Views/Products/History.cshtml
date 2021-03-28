@@ -1,4 +1,5 @@
 ﻿@using PhoneStore.Models
+ 
 
 <title>@ViewData["idUser"] - PhoneStore</title>
 @{
@@ -19,6 +20,7 @@
                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapse@(order.Id)" aria-expanded="true" aria-controls="collapse@(order.Id)">
                         Order on @order.CreatedDate
                     </button>
+                    <span>@order.Status</span>
                 </h5>
             </div>
 
@@ -32,6 +34,7 @@
                                 <th>Name</th>
                                 <th>Quantity</th>
                                 <th>Cost</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -43,6 +46,7 @@
                                     <td>@detail.IdProductNavigation.Name</td>
                                     <td>@detail.IdProductNavigation.Quantity</td>
                                     <td>@(detail.IdProductNavigation.Cost * detail.BoughtQuantity)</td>
+                                    <td></td>
                                 </tr>
                             }
                         </tbody>
