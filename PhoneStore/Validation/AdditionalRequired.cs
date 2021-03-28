@@ -37,7 +37,4 @@ namespace PhoneStore.Validation
         }
     }
 
-    
-
-
 }

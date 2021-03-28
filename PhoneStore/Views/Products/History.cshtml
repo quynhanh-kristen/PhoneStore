@@ -12,51 +12,55 @@
 <div id="accordion">
     @foreach (TblOrder order in ViewBag.orders)
     {
-        <div class="card">
-            <div class="card-header" id="heading@(order.Id)">
-                <div class="mb-0 col-md-6">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse@(order.Id)" aria-expanded="true" aria-controls="collapse@(order.Id)">
-                        Order on @order.CreatedDate
-                    </button>
-                </div>
-                <div class="mb-0 col-md-2 float-right">
-                    <p class="status status-@order.Status">@order.Status</p>
-                </div>
+    <div class="card">
+        <div class="card-header" id="heading@(order.Id)">
+            <div class="mb-0 col-md-6">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse@(order.Id)" aria-expanded="true" aria-controls="collapse@(order.Id)">
+                    Order on @order.CreatedDate
+                </button>
             </div>
-            
-            <div id="collapse@(order.Id)" class="collapse show" aria-labelledby="heading@(order.Id)" data-parent="#accordion">
-                <div class="card-body">
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Cost</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (TblOrderDetail detail in order.TblOrderDetail)
-                            {
-                                <tr>
-                                    <td><img src="../images/@detail.IdProductNavigation.Image" width="70" height="90"></td>
-                                    <td>@detail.IdProductNavigation.Name</td>
-                                    <td>@detail.BoughtQuantity</td>
-                                    <td>@(detail.IdProductNavigation.Cost * detail.BoughtQuantity) <i class="fa fa-usd" aria-hidden="true"></i></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="col-md-1 float-right">
-                    <a asp-controller="Products" asp-action="ChangeStatus" asp-route-id="@(order.Id)"
-                       class="btn btn-danger">Cancel</a>
-                </div>
+            <div class="mb-0 col-md-2 float-right">
+                <p class="status status-@order.Status">@order.Status</p>
             </div>
         </div>
+
+        <div id="collapse@(order.Id)" class="collapse show" aria-labelledby="heading@(order.Id)" data-parent="#accordion">
+            <div class="card-body">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Cost</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (TblOrderDetail detail in order.TblOrderDetail)
+                        {
+                            <tr>
+                                <td><img src="../images/@detail.IdProductNavigation.Image" width="70" height="90"></td>
+                                <td>@detail.IdProductNavigation.Name</td>
+                                <td>@detail.BoughtQuantity</td>
+                                <td>@(detail.IdProductNavigation.Cost * detail.BoughtQuantity) <i class="fa fa-usd" aria-hidden="true"></i></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @{ if (order.Status.Equals("Pending"))
+            {
+                <div class="card-footer">
+                    <div class="col-md-1 float-right">
+                        <a asp-controller="Products" asp-action="ChangeStatus" asp-route-id="@(order.Id)"
+                           class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
     }
 </div>
 <style>
@@ -65,12 +69,10 @@
         box-shadow: 0 5px 10px #808080;
     }
     .status {
-
         border-radius: 30%;
         background-color: #e0ff40;
         padding: 5px 5px 5px 5px;
         text-align: center;
-      
     }
     .status-Pending {
         background-color: #f4ff6a;
