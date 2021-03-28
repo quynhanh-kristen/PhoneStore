@@ -61,7 +61,7 @@
         </tr>
     </table>
 
-    <a asp-controller="Products" asp-action="Checkout" class="btn btn-success">Order</a>
+    <a asp-controller="Products" asp-action="Checkout" class="btn btn-submit">Order</a>
 
     <style>
         table {
@@ -84,7 +84,20 @@
         td {
             padding: 1rem 2rem;
         }
+        .btn-submit {
+            text-decoration: none;
+            padding: 10px 15px 10px 15px;
+            color: #fff;
+            background: #0062CC;
+            border-color: #0062cc;
+            transition: 0.5s;
+            border-radius: 10%;
+        }
 
+            .btn-submit:hover {
+                background: #85ADFF;
+                border-color: #85ADFF;
+            }
     </style>
     @section Scripts {
         <script>

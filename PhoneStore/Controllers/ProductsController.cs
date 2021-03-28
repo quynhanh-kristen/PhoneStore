@@ -326,7 +326,7 @@ namespace PhoneStore.Controllers
             newOrder.CreatedDate = DateTime.Now;
             newOrder.IdUser = user.Id;
             newOrder.Payment = "COD";
-            newOrder.Status = "Done";
+            newOrder.Status = "Pending";
 
             _context.TblOrder.Add(newOrder);
             _context.SaveChanges();
