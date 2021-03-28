@@ -67,8 +67,11 @@ namespace PhoneStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["IdRole"] = new SelectList(_context.TblRole, "Id", "Id", tblUser.IdRole);
-            return View(tblUser);
+            else
+            {
+                TempData["FailedCreate"] = "Can not register";
+                return View("Create");
+            }
         }
 
         // GET: TblUsers/Edit/5
